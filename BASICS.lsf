@@ -1,0 +1,32 @@
+Link64
+======
+
+ATN (on c64) ---> ACK (on Lpt) ---> IRQ 5/7 ---> lsf.c
+DATA ------------------------------------------> lsf.c
+CLK -------------------------------------------> lsf.c
+
+
+lsf.c - basic ideas - Jimmy Larsson 1997-09-07
+==============================================
+
+Init
+----
+Install interrupt-handler, to monitor ATN and receive reads/write (loads/save) 
+requests from the c64. Allocate various structures needed.
+
+
+Read
+----
+Retrieve data that interrupt-handler has been requested to receive from c64.
+
+Write
+-----
+Write data as we have been requested via the interrpt code.
+
+
+Interrupt-handler
+-----------------
+If c64 requests a load or a save on a enabled device, respond to it, 
+receive the channel number and set a flag that can be read via ioctl, 
+by the user of the lsf.c device.
+
